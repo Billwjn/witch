@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" >
+        function submitForm(){
+            $.ajax({
+                url:"http://106.13.96.248:8701/demo/show/input",
+                data:$("#inputForm").serialize(),
+                type:"POST",
+                dataType:"JSON",
+                success:function(result){
+                    console.log(result)
+                    if (result.status == 0){
+                        alert()
+                    } else if(result.code == 2){
+                        location.href="http://106.13.96.248:9999/front/html/new2.html"
+                    }else{
+                        alert(result.message)
+                    }
+                }
+            })
+        }
+    </script>
+<body>
+
+</body>
+</html>

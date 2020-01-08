@@ -2,6 +2,7 @@ package com.wjn.base.mapper;
 
 import com.wjn.base.dto.BaseDto;
 import com.wjn.base.entity.BaseEntity;
+import org.mapstruct.Mapper;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public interface BaseMapper<TEntity extends BaseEntity , TDto extends BaseDto> {
      * @param dto 数据传输对象。
      * @return 实体。
      */
+
     TEntity dtoToEntity(TDto dto);
 
     /**

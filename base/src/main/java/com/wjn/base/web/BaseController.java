@@ -18,7 +18,7 @@ public abstract class BaseController<TDto extends BaseDto , TService extends Bas
      * @author wujianong
      */
     @PostMapping
-    public ResultData create(@RequestBody TDto dto){
+    public ResultData create(TDto dto){
         try {
             TDto tDto = (TDto)service.create(dto);
             return ResultData.build(1,"添加成功",tDto);

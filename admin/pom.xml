@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+        <!--springsecurity-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <!--基础依赖-->
         <dependency>
             <groupId>com.wjn</groupId>

@@ -5,10 +5,7 @@ import com.wjn.api.dto.AdminDto;
 import com.wjn.base.util.ResultData;
 import com.wjn.base.web.BaseController;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,5 +34,10 @@ public class AdminController extends BaseController<AdminDto, AdminService> {
     @PostMapping("regist")
     public ResultData regist(AdminDto adminDto){
         return service.regist(adminDto);
+    }
+
+    @GetMapping
+    public String testSecurity(){
+        return "hello world!";
     }
 }

@@ -28,4 +28,14 @@ public class AdminController extends BaseController<AdminDto, AdminService> {
         String password = request.getParameter("password");
         return service.login(username,password);
     }
+
+    /**
+     * 注册方法
+     *
+     * @author wujianong
+     */
+    @PostMapping("regist")
+    public ResultData regist(AdminDto adminDto){
+        return service.regist(adminDto);
+    }
 }

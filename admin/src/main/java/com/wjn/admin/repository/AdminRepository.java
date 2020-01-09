@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdminRepository extends BaseRepository<Admin> {
+    /**
+     * 通过用户名查询当前用户
+     * @author wujianong
+     */
     @Query(value = "select * from witch_admin where username = ?1" , nativeQuery = true)
     Admin fingAdminByUsername(String username);
+
 }

@@ -42,4 +42,31 @@ public class AdminService extends BaseService<AdminDto,Admin,AdminMapper, AdminR
             return ResultData.build(0,msg,e.getMessage());
         }
     }
+
+    /**
+     * 注册方法
+     *
+     * @author wujianong
+     */
+    public ResultData regist(AdminDto adminDto){
+        //查看当前用户名是否被注册
+        if(isRegisted(adminDto.getUsername())){
+            return ResultData.build(0,"该用户名已经被注册",null);
+        }else{
+            try {
+                AdminDto dto = create(adminDto);
+                return ResultData.build(1,"注册成功",dto);
+            }catch (Exception e){
+                e.printStackTrace();
+                String msg = StringUtils.isEmpty(e.getMessage()) ? "注册失败" : e.getMessage();
+                return ResultData.build(0,msg,e.getMessage());
+            }
+        }
+    }
+
+    //查看用户名是否被注册 true : 被注册， false : 没有被注册
+    public boolean isRegisted(String username){
+        Admin admin = repository.fingAdminByUsername(username);
+        return admin != null;
+    }
 }

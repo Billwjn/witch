@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResultData {
-    // 响应业务状态
+    // 响应业务状态  1:成功   0：失败
     private Integer status;
 
     // 响应消息

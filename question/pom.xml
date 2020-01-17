@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.wjn</groupId>
-    <artifactId>admin</artifactId>
+    <artifactId>question</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>admin</name>
+    <name>question</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -119,7 +119,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>witch-admin</finalName>
+        <finalName>witch-question</finalName>
     </build>
 
 </project>

@@ -36,8 +36,4 @@ public class AdminController extends BaseController<AdminDto, AdminService> {
         return service.regist(adminDto);
     }
 
-    @GetMapping
-    public String testSecurity(){
-        return "hello world!";
-    }
 }

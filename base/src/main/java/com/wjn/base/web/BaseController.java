@@ -29,4 +29,9 @@ public abstract class BaseController<TDto extends BaseDto , TService extends Bas
         }
     }
 
+    @GetMapping
+    public ResultData findAll(){
+        return ResultData.build(1,"查询成功",service.findAll());
+    }
+
 }

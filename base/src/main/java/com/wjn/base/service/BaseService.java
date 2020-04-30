@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 import javax.persistence.criteria.Predicate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -61,7 +62,18 @@ public class BaseService<TDto extends BaseDto , TEntity extends BaseEntity , TMa
         String id = s.replace("-", "");
         entity.setId(id);
         Date date = new Date();
+        entity.setDr(0);
         entity.setTs(date);
         entity.setCreateTime(date);
+    }
+
+    /**
+     * 根据id查询详情
+     * @param id
+     * @return
+     */
+    public TDto findOneById(String id){
+        Optional<TEntity> optionalTEntity = repository.findById(id);
+        return mapper.entityToDto(optionalTEntity.get());
     }
 }

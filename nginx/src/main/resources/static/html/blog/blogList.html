@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客列表</title>
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $.ajax({
+                url:"http://117.51.148.226:8702/witch-blog/blog",
+                type:"GET",
+                success:function(result){
+                    console.log(result)
+                    if (result.status == 0){
+                        alert(result.msg);
+                    }else{
+                        var obj = result.data;
+                        var len = obj.length;
+                        console.log(len)
+                        for ( var i = 0; i < len; i++) {
+                            $("#blogListTable").append("<tr><td>"+obj[i].code+"</td><td><a href='javascript:void(0);' onclick=\"detailClick('"+obj[i].id+"')\">"+obj[i].title+"</a></td><td>"+obj[i].creator+"</td><td>"+obj[i].createTime+"</td></tr>")
+                        }
+                    }
+                }
+            })
+        })
+        function detailClick(blogId){
+            console.log(blogId);
+            $.ajax({
+                url:"http://117.51.148.226:8702/witch-blog/blog/findOneById",
+                data:{"id":blogId},
+                type:"GET",
+                dataType:"JSON",
+                success:function(result){
+                    var blogObj = result.data;
+                    console.log(result)
+                    if (result.status == 0){
+                        alert(result.msg)
+                    }else{
+                        $("#dialogModalTitle").html(blogObj.title);
+                        $("#modalBlogContent").val(blogObj.content);
+                        $("#blogDetailModal").modal();
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="page-header">
+    <h2>博客列表</h2>
+</div>
+
+<table class="table table-bordered" id="blogListTable">
+    <thead>
+        <tr>
+            <td>编码</td>
+            <td>标题</td>
+            <td>作者</td>
+            <td>创建时间</td>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<div class="modal fade" id="blogDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalBlogTitle"><span id="dialogModalTitle"></span></h4>
+            </div>
+            <div class="modal-body">
+                <textarea type="text" class="form-control" id="modalBlogContent" placeholder="内容" style="height: 200px" name="content"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

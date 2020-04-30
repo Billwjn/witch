@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增博客</title>
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#userIdInput").val(localStorage.username);
+        })
+        function submitBlogForm(){
+            console.log("进入提交方法")
+            $.ajax({
+                url:"http://117.51.148.226:8702/witch-blog/blog",
+                data:$("#blogForm").serialize(),
+                type:"POST",
+                dataType:"JSON",
+                success:function(result){
+                    console.log(result)
+                    if (result.status == 0){
+                        alert(result.msg)
+                    }else{
+                        alert("发布成功！")
+                        location.href="blogList.html"
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<form id="blogForm"  enctype="multipart/form-data">
+    <div class="container-fluid">
+        <div class="page-header">
+            <h2>博客列表</h2>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputTitle">标题</label>
+            <input type="text" class="form-control" id="exampleInputTitle" placeholder="标题" name="title">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputContent">内容</label>
+            <textarea type="text" class="form-control" id="exampleInputContent" placeholder="内容" style="height: 500px" name="content"></textarea>
+        </div>
+        <input type="hidden" id="userIdInput" name="creator">
+        <button type="button" class="btn btn-default" onclick="submitBlogForm()">发布</button>
+    </div>
+
+</form>
+</body>
+</html>

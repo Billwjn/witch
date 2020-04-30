@@ -12,7 +12,7 @@
 
         function submitForm(){
             $.ajax({
-                url:"http://117.51.148.226:8888/witch-admin/admin/regist",
+                url:"http://117.51.148.226:8701/witch-admin/admin/regist",
                 data:$("#inputForm").serialize(),
                 type:"POST",
                 dataType:"JSON",
@@ -21,6 +21,8 @@
                     if (result.status == 0){
                         alert(result.msg)
                     }else{
+                        localStorage.userId=result.data.id;
+                        localStorage.username=result.data.username;
                         location.href="main.html"
                     }
                 }

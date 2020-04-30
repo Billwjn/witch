@@ -18,6 +18,8 @@ public class BaseEntity implements Serializable {
     @Id
     @Column(name = "ID")
     private String id;
+    @Column(name = "CODE")
+    private String code;
     @Column(name = "DR")
     private Integer dr;
     @Column(name = "TS")
@@ -37,6 +39,14 @@ public class BaseEntity implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public Integer getDr() {

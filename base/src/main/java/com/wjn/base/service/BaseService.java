@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.Predicate;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +47,9 @@ public class BaseService<TDto extends BaseDto , TEntity extends BaseEntity , TMa
      */
     public TDto create(TDto dto){
         Assert.notNull(dto, "dto 参数不能为空");
+        if (StringUtils.isEmpty(dto.getCreator())){
+            throw new RuntimeException("获取不到当前登陆人,请重新登录");
+        }
         TEntity entity = mapper.dtoToEntity(dto);
         //设置默认值
         setDefaultValues(entity);
@@ -62,6 +67,13 @@ public class BaseService<TDto extends BaseDto , TEntity extends BaseEntity , TMa
         String id = s.replace("-", "");
         entity.setId(id);
         Date date = new Date();
+        StringBuilder sb = new StringBuilder();
+        String name = entity.getClass().getName();
+        String substring = name.substring(name.lastIndexOf(".")+1);
+        sb.append(substring);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmSS");
+        sb.append(simpleDateFormat.format(date));
+        entity.setCode(sb.toString());
         entity.setDr(0);
         entity.setTs(date);
         entity.setCreateTime(date);
@@ -75,5 +87,17 @@ public class BaseService<TDto extends BaseDto , TEntity extends BaseEntity , TMa
     public TDto findOneById(String id){
         Optional<TEntity> optionalTEntity = repository.findById(id);
         return mapper.entityToDto(optionalTEntity.get());
+    }
+
+    /**
+     * 根据id删除
+     * @param id
+     */
+    public void delete(String id){
+        Optional<TEntity> optionalTEntity = repository.findById(id);
+        TEntity entity = optionalTEntity.get();
+        entity.setDr(1);
+        repository.deleteById(id);
+        repository.save(entity);
     }
 }

@@ -15,6 +15,7 @@ public class BlogService extends BaseService<BlogDto, Blog, BlogMapper, BlogRepo
         if (StringUtils.isEmpty(dto.getTitle())){
             throw new RuntimeException("标题不能为空！");
         }
+
         return super.create(dto);
     }
 }

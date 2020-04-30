@@ -5,10 +5,7 @@ import com.wjn.base.service.BaseService;
 import com.wjn.base.util.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 public abstract class BaseController<TDto extends BaseDto , TService extends BaseService> {
     @Autowired
@@ -30,10 +27,20 @@ public abstract class BaseController<TDto extends BaseDto , TService extends Bas
         }
     }
 
+    /**
+     * 查询所有方法
+     * @return
+     */
     @GetMapping
     public ResultData findAll(){
         return ResultData.build(1,"查询成功",service.findAll());
     }
+
+    /**
+     * 根据id查询详情
+     * @param id
+     * @return
+     */
     @GetMapping("findOneById")
     public ResultData findOneById(@RequestParam("id") String id){
         try {
@@ -42,6 +49,23 @@ public abstract class BaseController<TDto extends BaseDto , TService extends Bas
         }catch (Exception e){
             e.printStackTrace();
             String msg = StringUtils.isEmpty(e.getMessage()) ? "查询详情失败" :e.getMessage();
+            return ResultData.build(0,msg,e.getMessage());
+        }
+    }
+
+    /**
+     * 根据id删除
+     * @param id
+     * @return
+     */
+    @PutMapping("delete")
+    public ResultData deleteById(@RequestParam("id") String id){
+        try {
+            service.delete(id);
+            return ResultData.build(1,"删除成功",null);
+        }catch (Exception e){
+            e.printStackTrace();
+            String msg = StringUtils.isEmpty(e.getMessage()) ? "删除失败" :e.getMessage();
             return ResultData.build(0,msg,e.getMessage());
         }
     }

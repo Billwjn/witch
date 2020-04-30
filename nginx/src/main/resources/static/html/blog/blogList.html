@@ -20,7 +20,7 @@
                         var len = obj.length;
                         console.log(len)
                         for ( var i = 0; i < len; i++) {
-                            $("#blogListTable").append("<tr><td>"+obj[i].code+"</td><td><a href='javascript:void(0);' onclick=\"detailClick('"+obj[i].id+"')\">"+obj[i].title+"</a></td><td>"+obj[i].creator+"</td><td>"+obj[i].createTime+"</td></tr>")
+                            $("#blogListTable").append("<tr><td>"+obj[i].code+"</td><td><a href='javascript:void(0);' onclick=\"detailClick('"+obj[i].id+"')\">"+obj[i].title+"</a></td><td>"+obj[i].creator+"</td><td>"+obj[i].createTime+"</td><td><a href='javascript:void(0);' onclick=\"deleteBlogClick('"+obj[i].id+"')\">删除</a></td></tr>")
                         }
                     }
                 }
@@ -46,6 +46,23 @@
                 }
             })
         }
+        function deleteBlogClick(blogId){
+            console.log(blogId);
+            $.ajax({
+                url:"http://117.51.148.226:8702/witch-blog/blog/delete",
+                data:{"id":blogId},
+                type:"PUT",
+                dataType:"JSON",
+                success:function(result){
+                    console.log(result)
+                    if (result.status == 0){
+                        alert(result.msg)
+                    }else{
+                        location.href="blogList.html"
+                    }
+                }
+            })
+        }
     </script>
 </head>
 <body>
@@ -60,6 +77,7 @@
             <td>标题</td>
             <td>作者</td>
             <td>创建时间</td>
+            <td>操作</td>
         </tr>
     </thead>
     <tbody>

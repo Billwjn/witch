@@ -11,6 +11,9 @@
 
 
         function submitForm(){
+            var creator = $("#inputUsername3").val();
+            console.log(creator)
+            $("#creatorInput").val(creator)
             $.ajax({
                 url:"http://117.51.148.226:8701/witch-admin/admin/regist",
                 data:$("#inputForm").serialize(),
@@ -38,6 +41,7 @@
                 <h1>用户注册 <small>please regist</small></h1>
             </div>
             <form class="form-horizontal" id="inputForm" enctype="multipart/form-data">
+                <input type="hidden" id="creatorInput" name="creator">
                 <div class="form-group">
                     <label for="inputUsername3" class="col-sm-2 control-label"><font color="red">*</font>用户名：</label>
                     <div class="col-sm-10">

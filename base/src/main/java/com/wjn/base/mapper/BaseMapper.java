@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-public interface BaseMapper<TEntity extends BaseEntity , TDto extends BaseDto> {
+public abstract class BaseMapper<TEntity extends BaseEntity , TDto extends BaseDto> {
 
     /**
      * 将数据传输对象转换为实体。
@@ -15,7 +15,7 @@ public interface BaseMapper<TEntity extends BaseEntity , TDto extends BaseDto> {
      * @return 实体。
      */
 
-    TEntity dtoToEntity(TDto dto);
+    public abstract TEntity dtoToEntity(TDto dto);
 
     /**
      * 将多个数据传输对象转换为实体列表。
@@ -23,7 +23,7 @@ public interface BaseMapper<TEntity extends BaseEntity , TDto extends BaseDto> {
      * @param dtos 数据传输对象列表。
      * @return 实体列表。
      */
-    List<TEntity> dtosToEntities(List<TDto> dtos);
+    public abstract List<TEntity> dtosToEntities(List<TDto> dtos);
 
     /**
      * 将实体转换为数据传输对象。
@@ -31,7 +31,7 @@ public interface BaseMapper<TEntity extends BaseEntity , TDto extends BaseDto> {
      * @param entity 实体。
      * @return 数据传输对象。
      */
-    TDto entityToDto(TEntity entity);
+    public abstract TDto entityToDto(TEntity entity);
 
     /**
      * 将多个实体转换为数据传输对象列表。
@@ -39,5 +39,5 @@ public interface BaseMapper<TEntity extends BaseEntity , TDto extends BaseDto> {
      * @param entities 实体列表。
      * @return 数据传输对象列表。
      */
-    List<TDto> entitiesToDtos(List<TEntity> entities);
+    public abstract List<TDto> entitiesToDtos(List<TEntity> entities);
 }

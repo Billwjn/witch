@@ -4,21 +4,20 @@ import com.wjn.base.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
-@Table(name = "witch_blog")
+@Table(name = "witch_admin")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Blog extends BaseEntity {
+public class Admin extends BaseEntity {
     private String code;
-    private String title;
-    private String content;
+    private String username;
+    private String password;
+    private String nickname;
+    private String phone;
+    private String email;
 }

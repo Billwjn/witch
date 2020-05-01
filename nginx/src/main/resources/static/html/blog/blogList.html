@@ -20,7 +20,12 @@
                         var len = obj.length;
                         console.log(len)
                         for ( var i = 0; i < len; i++) {
-                            $("#blogListTable").append("<tr><td>"+obj[i].code+"</td><td><a href='javascript:void(0);' onclick=\"detailClick('"+obj[i].id+"')\">"+obj[i].title+"</a></td><td>"+obj[i].creator+"</td><td>"+obj[i].createTime+"</td><td><a href='javascript:void(0);' onclick=\"deleteBlogClick('"+obj[i].id+"')\">删除</a></td></tr>")
+                            if (obj[i].creator == localStorage.username){
+                                $("#blogListTable").append("<tr><td>"+obj[i].code+"</td><td><a href='javascript:void(0);' onclick=\"detailClick('"+obj[i].id+"')\">"+obj[i].title+"</a></td><td>"+obj[i].creator+"</td><td>"+obj[i].createTime+"</td><td><a href='javascript:void(0);' onclick=\"deleteBlogClick('"+obj[i].id+"')\">删除</a></td></tr>")
+                            } else{
+                                $("#blogListTable").append("<tr><td>"+obj[i].code+"</td><td><a href='javascript:void(0);' onclick=\"detailClick('"+obj[i].id+"')\">"+obj[i].title+"</a></td><td>"+obj[i].creator+"</td><td>"+obj[i].createTime+"</td><td></td></tr>")
+                            }
+
                         }
                     }
                 }
@@ -28,6 +33,7 @@
         })
         function detailClick(blogId){
             console.log(blogId);
+            $("#commentListDiv").html("")
             $.ajax({
                 url:"http://117.51.148.226:8702/witch-blog/blog/findOneById",
                 data:{"id":blogId},
@@ -35,12 +41,39 @@
                 dataType:"JSON",
                 success:function(result){
                     var blogObj = result.data;
+                    console.log(blogObj)
+                    var commentList = blogObj.commentDtos;
+                    var commentCount = commentList.length;
                     console.log(result)
                     if (result.status == 0){
                         alert(result.msg)
                     }else{
+                        /*填充博客详情*/
                         $("#dialogModalTitle").html(blogObj.title);
                         $("#modalBlogContent").val(blogObj.content);
+                        if (commentCount == 0){
+                            $("#commentListDiv").append("<br/><span>暂无评论</span><br/><br/>")
+                        } else{
+                            $("#commentListDiv").append("<br/><span>评论：</span><br/>")
+                        }
+                        /*填充评论列表*/
+                        for (var i = 0; i < commentCount ; i++){
+                            if (commentList[i].targetId == null || commentList[i].targetId == ''){
+                                $("#commentListDiv").append("&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #2e6da4'>"+commentList[i].sourceName+"</span>&nbsp;:&nbsp;<span>"+commentList[i].content+"</span>")
+                            }else{
+                                $("#commentListDiv").append("&nbsp;&nbsp;&nbsp;&nbsp;<span style='color: #2e6da4'>"+commentList[i].sourceName+"&nbsp;</span>回复<span style='color: #2e6da4'>&nbsp;"+commentList[i].targetName+"</span>&nbsp;:&nbsp;<span>"+commentList[i].content+"</span>")
+                            }
+                            if (commentList[i].sourceId != localStorage.userId){
+                                $("#commentListDiv").append("<span style='float:right'><a href='javascript:void(0);' onclick=\"replyClick('"+commentList[i].sourceId+"','"+commentList[i].sourceName+"')\">回复</a></span><br/>")
+                            }else{
+                                $("#commentListDiv").append("<br/>")
+                            }
+                        }
+                        /*填充评论表单必填项*/
+                        $("#commentFormSourceIdInput").val(localStorage.userId);
+                        $("#commentFormCreatorInput").val(localStorage.userId);
+                        $("#commentFormBlogIdInput").val(blogObj.id);
+                        /*弹出模态框*/
                         $("#blogDetailModal").modal();
                     }
                 }
@@ -58,6 +91,31 @@
                     if (result.status == 0){
                         alert(result.msg)
                     }else{
+                        location.href="blogList.html"
+                    }
+                }
+            })
+        }
+        function replyClick(targetId,targetName){
+            console.log("targetId:"+targetId);
+            console.log("targetName:"+targetName);
+            /*更换评论框提示信息*/
+            $("#commentTextArea").attr("placeholder","回复"+targetName+":");
+            /*给表单的targetId赋值*/
+            $("#commentFormTargetIdInput").val(targetId);
+        }
+        function commentSubmitClick(){
+            $.ajax({
+                url:"http://117.51.148.226:8702/witch-blog/comment",
+                data:$("#commentForm").serialize(),
+                type:"POST",
+                dataType:"JSON",
+                success:function(result){
+                    console.log(result)
+                    if (result.status == 0){
+                        alert(result.msg)
+                    }else{
+                        alert("提交成功!")
                         location.href="blogList.html"
                     }
                 }
@@ -91,12 +149,20 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="modalBlogTitle"><span id="dialogModalTitle"></span></h4>
             </div>
+            <form id="commentForm" enctype="multipart/form-data">
             <div class="modal-body">
-                <textarea type="text" class="form-control" id="modalBlogContent" placeholder="内容" style="height: 200px" name="content" readonly="readonly"></textarea>
+                <textarea type="text" class="form-control" id="modalBlogContent" placeholder="内容" readonly="readonly"></textarea>
+                <div id="commentListDiv"></div><br/>
+                    <textarea type="text" class="form-control" id="commentTextArea" placeholder="评论"  name="content"></textarea>
+                    <input type="hidden" id="commentFormSourceIdInput" name="sourceId">
+                    <input type="hidden" id="commentFormTargetIdInput" name="targetId">
+                    <input type="hidden" id="commentFormCreatorInput" name="creator">
+                    <input type="hidden" id="commentFormBlogIdInput" name="blogId">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="commentSubmitClick()">提交</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

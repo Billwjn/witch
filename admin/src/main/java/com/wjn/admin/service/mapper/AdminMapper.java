@@ -6,5 +6,5 @@ import com.wjn.base.mapper.BaseMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface AdminMapper extends BaseMapper<Admin, AdminDto> {
+public abstract class AdminMapper extends BaseMapper<Admin, AdminDto> {
 }

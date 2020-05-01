@@ -6,5 +6,6 @@ import com.wjn.blog.entity.Blog;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface BlogMapper extends BaseMapper<Blog, BlogDto> {
+public abstract class BlogMapper extends BaseMapper<Blog, BlogDto> {
+
 }

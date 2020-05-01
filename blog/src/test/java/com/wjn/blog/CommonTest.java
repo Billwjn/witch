@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class CommonTest {
     @Test
@@ -13,5 +14,8 @@ public class CommonTest {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmSS");
         String format = simpleDateFormat.format(date);
         System.out.println(format);
+    }
+    @Test
+    public void test2(){
     }
 }

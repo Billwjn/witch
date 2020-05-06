@@ -10,10 +10,19 @@
         $(function(){
             console.log("页面加载")
             console.log(localStorage.username);
-            $("#userSpan").html(localStorage.username);
+            if (localStorage.getItem("username") == 1){
+                console.log("未登录");
+                location.href="index.html";
+            }
+            $("#userSpan").html(localStorage.nickname);
         });
         function addTab(obj){
             $("#center").attr("src",obj);
+        }
+        function logout(){
+            localStorage.username = 1;
+            localStorage.userId = 1;
+            location.href="index.html";
         }
     </script>
 </head>
@@ -29,12 +38,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="main.html">主页</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+            <!--<ul class="nav navbar-nav">
                 <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">Link</a></li>
                 <li class="dropdown">
@@ -55,13 +64,13 @@
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+            </form>-->
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">按钮</a></li>
+                <!--<li><a href="#">按钮</a></li>-->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="userSpan"></span> <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="index.html">登出</a></li>
+                        <li><a href="javascript:void(0);" onclick="logout()">登出</a></li>
                     </ul>
                 </li>
             </ul>
@@ -72,7 +81,7 @@
     <!--左边列表-->
     <div class="col-sm-2">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel panel-default">
+            <!--<div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -86,7 +95,7 @@
                             <button type="button" class="list-group-item">我的题目</button>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingTwo">
                     <h4 class="panel-title">
@@ -102,7 +111,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
+            <!--<div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingThree">
                     <h4 class="panel-title">
                         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -115,16 +124,23 @@
                         333
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
     <!--右边详情-->
     <div class="col-sm-10" >
         <!-- 16:9 aspect ratio -->
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="" id="center"></iframe>
+            <iframe class="embed-responsive-item" src="./html/blog/blogList.html" id="center"></iframe>
         </div>
     </div>
 </div>
+<!--页尾-->
+<nav class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="container">
+        <br>
+        <p class="text-center"><font color="white">本网站版权归个人所有，盗版必究！<a href="http://www.beian.miit.gov.cn">京ICP备20004652号-1</a></font></p>
+    </div>
+</nav>
 </body>
 </html>

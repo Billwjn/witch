@@ -7,7 +7,7 @@
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript">
-        function submitForm(){
+            function submitForm(){
             $.ajax({
                 url:"http://117.51.148.226:8701/witch-admin/admin/login",
                 data:$("#inputForm").serialize(),
@@ -20,6 +20,7 @@
                     }else{
                         localStorage.userId=result.data.id;
                         localStorage.username=result.data.username;
+                        localStorage.nickname=result.data.nickname;
                         location.href="main.html";
                     }
                 }
@@ -39,12 +40,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="main.html">主页</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
+           <!-- <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">Link</a></li>
                 <li class="dropdown">
@@ -65,11 +66,11 @@
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+            </form>-->
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" data-toggle="modal" data-target="#loginModel">登陆</a></li>
                 <li><a href="regist.html">注册</a></li>
-                <li class="dropdown">
+                <!--<li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">Action</a></li>
@@ -78,7 +79,7 @@
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Separated link</a></li>
                     </ul>
-                </li>
+                </li>-->
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -135,7 +136,7 @@
                         <div class="col-sm-offset-3 col-sm-8">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox"> Remember me
+                                    <input type="checkbox" onclick="alert('就算你打上勾也记不住，甭想了！')"> Remember me
                                 </label>
                             </div>
                         </div>
@@ -154,7 +155,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="container">
         <br>
-        <p class="text-center"><font color="white">本网站版权归个人所有，盗版必究！</font></p>
+        <p class="text-center"><font color="white">本网站版权归个人所有，盗版必究！<a href="http://www.beian.miit.gov.cn">京ICP备20004652号-1</a></font></p>
     </div>
 </nav>
 </body>
